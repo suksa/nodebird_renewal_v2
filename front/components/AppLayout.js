@@ -8,7 +8,6 @@ import UserProfile from '../components/UserProfile'
 import LoginForm from '../components/LoginForm'
 
 const AppLayout = ({ children }) => {
-    console.log(children)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     return (
         <div>
