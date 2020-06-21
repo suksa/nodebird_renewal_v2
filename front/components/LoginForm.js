@@ -3,19 +3,18 @@ import Link from 'next/link'
 import { Form, Input, Button } from 'antd'
 import styled from 'styled-components'
 import useInput from '../hooks/useInput'
-import { useDispatch } from 'react-redux'
-import { loginAction } from '../reducers/user'
-
-
+import { useDispatch, useSelector } from 'react-redux'
+import { loginRequestAction } from '../reducers/user'
 
 const LoginForm = () => {
+    const { isLoggingIn } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [id, onChangeId] = useInput('')
     const [password, onChangePassword] = useInput('')
 
     // 컴포넌트에 props로 넘겨주는 함수는 useCallback 사용해서 최적화
     const onSubmitForm = useCallback(() => {
-        dispatch(loginAction( id, password ))
+        dispatch(loginRequestAction( id, password ))
     }, [id, password])
 
     return (
@@ -37,7 +36,7 @@ const LoginForm = () => {
                 />
             </div>
             <ButtonWrapper>
-                <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
+                <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
                 <Link href="/signup"><a><Button>회원가입</Button></a></Link>
             </ButtonWrapper>
         </FormWrapper>
