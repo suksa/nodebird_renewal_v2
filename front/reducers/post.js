@@ -1,5 +1,19 @@
+import shortId from 'shortid'
+
 export const initialState = {
     // 키값 앞자리 대문자? - 시퀄라이즈에서 관계있는 데이터끼리는 대문자로 뿌려서
+    addPostLoading: false,
+    addPostDone: false,
+    addPostError: null,
+    removePostLoading: false,
+    removePostDone: false,
+    removePostError: null,
+    addCommentLoading: false,
+    addCommentDone: false,
+    addCommentError: null,
+    loadPostsLoading: false,
+    loadPostsDone: false,
+    loadPostsError: null,
     mainPosts: [
         {
             id:1,
@@ -36,9 +50,7 @@ export const initialState = {
         }
     ],
     imagePaths: [],
-    addPostLoading: false,
-    addPostDone: false,
-    addPostError: null,
+    hasMorePost: false,
 }
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST'
@@ -59,16 +71,16 @@ export const addComment = (data) => ({
     data,
 })
 
-const dummyPost = {
-    id: 2,
-    content: '더미데이터입니다.',
+const dummyPost = (data) => ({
+    id: shortId.generate(),
+    content: data,
     User: {
         id: 1,
         nickname: '제로초',
     },
     Images: [],
     Comments: [],
-}
+})
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -82,7 +94,7 @@ const reducer = (state = initialState, action) => {
         case ADD_POST_SUCCESS:
             return {
                 ...state,
-                mainPosts: [dummyPost, ...state.mainPosts],
+                mainPosts: [dummyPost(action.data), ...state.mainPosts],
                 addPostLoading: false,
                 addPostDone: true,
             }
