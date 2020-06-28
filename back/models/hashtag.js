@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         collate: 'utf8mb4_general_ci',
     })
     Hashtag.associate = (db) => {
-        db.Hashtag.belongsToMany(db.Post) // 다대다 관계에선 중간테이블이생김
+        db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' }) // 다대다 관계에선 중간테이블이생김
     }
     return Hashtag
 }
