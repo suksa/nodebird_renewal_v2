@@ -1,11 +1,17 @@
 const express = require('express')
+
 const postRouter = require('./routes/post')
+const userRouter = require('./routes/user')
+
 const db = require('./models')
 const app = express()
 
 db.sequelize.sync().then(() => {
     console.log('db연결성공')
 }).catch(console.error)
+
+app.use(express.json()) // 프론트에서 보낸 데이터를 req.body에 넣어주는 역할
+app.use(express.urlencoded({ extended: true })) // 프론트에서 보낸 데이터를 req.body에 넣어주는 역할
 
 app.get('/', (req, res) => {
     res.send('hello express')
@@ -16,6 +22,7 @@ app.get('/api', (req, res) => {
 })
 
 app.use('/post', postRouter)
+app.use('/user', userRouter)
 
 // const server = http.createServer((req, res) => {
 //     console.log(req.url, req)
